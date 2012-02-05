@@ -20,7 +20,8 @@
 		noteData => {
 			image : "http://foo/path.png",
 			text : "Note's text",
-			title : "Note's title"
+			title : "Note's title",
+			link : "http://google.com"
 		}
 		options => {
 	  	speed : "fast", // or any other jquery speed definition
@@ -38,7 +39,7 @@
       'autoclose': 5000, 		// integer or false
       'position' : "top-right"	// top-left, top-right, bottom-left, or bottom-right
     };
-    options = $.extend(options, settings); // inject the defaults into options
+    options = $.extend(settings, options); // inject the defaults into options
 
     var position = options.position;
     var closeImageData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA1klEQVQoz6WSOw6CQBCG90gWXsjKxph4HZAEsgUSHlsAAa6ilzDGgopxP5Ix2K7FJH/+x+wMjBERoxXH8d5aey2K4l6W5ZMCw6FtvV+Qpumlrut313UyDIOM47gWGA4Nz08QomkaadtW+r5fA9M0rQWGQ8OjYRNF0c53mxH8aLc8z8/OuYWXKDAcGh68ZAzzMwpdveFEtyzLDt6AScBwaHjwkjF++cem+6zGJEmOlDZCUx8ZU1XVS3eC9K8sGtAGcGi6M5nwYPCowR8n+HcEH8BfJxdy5B8L5i9vzgm5WAAAAABJRU5ErkJggg==";
@@ -69,7 +70,7 @@
 	    	.replace("__TITLE__", noteData.title)
 	    	.replace("__TEXT__", noteData.text);
     }
-    
+
 
     // Passing in the object instead of specifying a note
     if (!note)
@@ -113,8 +114,19 @@
     {
       // Building and inserting sticky note
       $('.sticky-queue').prepend('<div class="sticky border-' + position + '" id="' + uniqID + '"></div>');
-      $('#' + uniqID).append('<img src="' + closeImageData + '" class="sticky-close" rel="' + uniqID + '" title="Close" />');
-      $('#' + uniqID).append('<div class="sticky-note" rel="' + uniqID + '">' + note + '</div>');
+      $('#' + uniqID)
+      	.append('<img src="' + closeImageData + '" class="sticky-close" rel="' + uniqID + '" title="Close" />')
+      	.append('<div class="sticky-note" rel="' + uniqID + '">' + note + '</div>');
+      
+
+      if(noteData && typeof(noteData.link) == typeof(""))
+      {
+	      $("#" + uniqID + " .sticky-note")
+	      	.css({cursor : "pointer"})
+	      	.click(function() {
+	    			window.open(noteData.link);
+	      	});
+      }
 
       // Smoother animation
       var height = $('#' + uniqID).height();

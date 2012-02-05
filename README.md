@@ -36,6 +36,22 @@ $.sticky(
   }, 
   function(args){ /*onShow Callback*/ }
 );
+
+$.sticky(
+  {
+    link : "http://www.android.com/",
+    image : "demo.jpg",
+    title : "Demo Notification",
+    text : "This is a demo notification which was requested in a more structured manner. This notification should have an image, title, text & would be clickable."
+  }, 
+  {
+    speed : 1500, 
+    position : 'top-center',
+    duplicates : false,
+    autoclose : false
+  }, 
+  function(args){ /*onShow Callback*/ }
+);
 ```
 
 Authors

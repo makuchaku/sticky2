@@ -12,14 +12,16 @@
   <script type="text/javascript">
     $(function() {
       window.showSticky();
+      $.sticky("This is just a textual notification which would not be clickable.", {autoclose : false});
     });
 
     function showSticky() {
       $.sticky(
         {
-          image : "http://userserve-ak.last.fm/serve/64s/157347.gif",
-          title : "Engadget Mobile",
-          text : "Added to jQuery in version 1.4, the .delay() method allows us to delay the execution of functions that follow it in the queue. It can be used with the standard effects queue or with a custom queue."
+          link : "http://www.android.com/",
+          image : "demo.jpg",
+          title : "Demo Notification",
+          text : "This is a demo notification which was requested in a more structured manner. This notification should have an image, title, text & would be clickable."
         },
         {
           position : "top-right",

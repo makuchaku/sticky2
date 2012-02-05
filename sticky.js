@@ -1,3 +1,9 @@
+/*
+	Sticky2 - by makuchaku (maku@makuchaku.in)
+	- Code reformatting
+	- Added demo.html
+*/
+
 // Sticky v1.0 by Daniel Raftery
 // http://thrivingkings.com/sticky
 //
@@ -9,9 +15,19 @@
     return $.fn.sticky(note, options, callback);
   };
 
+
+	/*  
+		note => Textual content which will be used as a note. HTML is allowed
+		options => {
+	  	speed : "fast", // or any other jquery speed definition
+	  	duplicates : true, // boolean
+	  	autoclose : 5000, // milisec after the sticky autocloses
+	  	position : "top-right" // top-left, top-right, bottom-left or bottom-right
+	  }
+	  callback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 
+  */
   $.fn.sticky = function (note, options, callback) {
     // Default settings
-    var position = 'top-right'; // top-left, top-right, bottom-left, or bottom-right
     var settings = {
       'speed': 'fast',
       // animations: fast, slow, or integer
@@ -19,6 +35,8 @@
       // true or false
       'autoclose': 5000 // integer or false
     };
+    var position = options.position || "top-right"; // top-left, top-right, bottom-left, or bottom-right
+
 
     // Passing in the object instead of specifying a note
     if (!note)

@@ -12,7 +12,11 @@
   <script type="text/javascript">
     $(function() {
       
-      $.sticky("Testing Sticky2...");
+      $.sticky("Testing Sticky2...", {
+          position : "top-left"
+        },
+        function(args){console.log(args);}
+      );
 
     });
   </script>

@@ -21,7 +21,7 @@
 		options => {
 	  	speed : "fast", // or any other jquery speed definition
 	  	duplicates : true, // boolean
-	  	autoclose : 5000, // milisec after the sticky autocloses
+	  	autoclose : 5000, // milisec after the sticky autocloses, or false
 	  	position : "top-right" // top-left, top-right, bottom-left or bottom-right
 	  }
 	  callback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 

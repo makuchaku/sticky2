@@ -26,7 +26,16 @@ $.sticky('This is a Sticky Note!');
 Advanced Options
 
 ```javascript
-$.sticky('This is a very special Sticky Note!',{speed:1500,position:'top-center',autoclose:false});
+$.sticky(
+  'This is a very special Sticky Note!', 
+  {
+    speed : 1500, 
+    position : 'top-center',
+    duplicates : false,
+    autoclose : false
+  }, 
+  function(args){ /*onShow Callback*/ }
+);
 ```
 
 Authors

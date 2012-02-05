@@ -1,13 +1,12 @@
 /*
 	Sticky2 - by makuchaku (maku@makuchaku.in)
-	- Code reformatting
-	- Added demo.html
-*/
 
-// Sticky v1.0 by Daniel Raftery
-// http://thrivingkings.com/sticky
-//
-// http://twitter.com/ThrivingKings
+
+	Sticky v1.0 by Daniel Raftery
+	http://thrivingkings.com/sticky
+
+	http://twitter.com/ThrivingKings
+*/
 (function ($) {
 
   // Using it without an object
@@ -96,12 +95,16 @@
     $('.sticky').ready(function () {
       // If 'autoclose' is enabled, set a timer to close the sticky
       if (settings['autoclose'])
-        $('#' + uniqID).delay(settings['autoclose']).fadeOut(settings['speed']);
+        $('#' + uniqID).delay(settings['autoclose']).fadeOut(settings['speed'], function() {
+	        $(this).remove(); // remove the note from dom
+	      });
     });
 
     // Closing a sticky
     $('.sticky-close').click(function () {
-      $('#' + $(this).attr('rel')).dequeue().fadeOut(settings['speed']);
+      $('#' + $(this).attr('rel')).dequeue().fadeOut(settings['speed'], function() {
+        $(this).remove();	// remove the note from dom
+      });
     });
 
 
@@ -118,7 +121,7 @@
       callback(response);
     else
       return (response);
-  
+    
   } // $.fn.sticky
 
 })(jQuery);

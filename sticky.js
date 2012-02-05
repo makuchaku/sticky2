@@ -16,7 +16,12 @@
 
 
 	/*  
-		note => Textual content which will be used as a note. HTML is allowed
+		if noteData is an object, we need to construct the note from noteTemplate - else, just use it as it is.
+		noteData => {
+			image : "http://foo/path.png",
+			text : "Note's text",
+			title : "Note's title"
+		}
 		options => {
 	  	speed : "fast", // or any other jquery speed definition
 	  	duplicates : true, // boolean
@@ -25,18 +30,46 @@
 	  }
 	  callback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 
   */
-  $.fn.sticky = function (note, options, callback) {
+  $.fn.sticky = function (noteData, options, callback) {
     // Default settings
     var settings = {
-      'speed': 'fast',
-      // animations: fast, slow, or integer
-      'duplicates': true,
-      // true or false
-      'autoclose': 5000 // integer or false
+      'speed': 'fast', 			// animations: fast, slow, or integer
+      'duplicates': true, 	// true or false
+      'autoclose': 5000, 		// integer or false
+      'position' : "top-right"	// top-left, top-right, bottom-left, or bottom-right
     };
-    var position = options.position || "top-right"; // top-left, top-right, bottom-left, or bottom-right
+    options = $.extend(options, settings); // inject the defaults into options
 
+    var position = options.position;
     var closeImageData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA1klEQVQoz6WSOw6CQBCG90gWXsjKxph4HZAEsgUSHlsAAa6ilzDGgopxP5Ix2K7FJH/+x+wMjBERoxXH8d5aey2K4l6W5ZMCw6FtvV+Qpumlrut313UyDIOM47gWGA4Nz08QomkaadtW+r5fA9M0rQWGQ8OjYRNF0c53mxH8aLc8z8/OuYWXKDAcGh68ZAzzMwpdveFEtyzLDt6AScBwaHjwkjF++cem+6zGJEmOlDZCUx8ZU1XVS3eC9K8sGtAGcGi6M5nwYPCowR8n+HcEH8BfJxdy5B8L5i9vzgm5WAAAAABJRU5ErkJggg==";
+
+    // Note template
+    var noteTemplate = '\
+	    <div class="sticky2-message-container">\
+	      <div class="sticky2-message-image-container">\
+	        <img src="__IMAGE__"/>\
+	      </div>\
+	      <div class="sticky2-message-text-container">\
+	        <div class="sticky2-message-title">__TITLE__</div>\
+	        <div class="sticky2-message-text">__TEXT__</div>\
+	      </div>\
+	    </div>\
+    ';
+
+
+    // if noteData is an object, we need to construct the note from noteTemplate
+    // else, just use it as it is.
+    if(typeof(noteData) == typeof(""))
+    	note = noteData;
+    else
+    {
+	    // construct the note from note template & input data
+	    var note = noteTemplate
+	    	.replace("__IMAGE__", noteData.image)
+	    	.replace("__TITLE__", noteData.title)
+	    	.replace("__TEXT__", noteData.text);
+    }
+    
 
     // Passing in the object instead of specifying a note
     if (!note)

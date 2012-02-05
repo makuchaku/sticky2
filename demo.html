@@ -3,7 +3,7 @@
   <title>Stickt2 Demo</title>
 
   <link rel="stylesheet" type="text/css" href="sticky.css">
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="sticky.js"></script>
 
 </head>
@@ -11,14 +11,23 @@
 
   <script type="text/javascript">
     $(function() {
-      
-      $.sticky("Testing Sticky2...", {
-          position : "top-left"
+      window.showSticky();
+    });
+
+    function showSticky() {
+      $.sticky(
+        {
+          image : "http://userserve-ak.last.fm/serve/64s/157347.gif",
+          title : "Engadget Mobile",
+          text : "Added to jQuery in version 1.4, the .delay() method allows us to delay the execution of functions that follow it in the queue. It can be used with the standard effects queue or with a custom queue."
+        },
+        {
+          position : "top-right",
+          autoclose : false
         },
         function(args){console.log(args);}
-      );
-
-    });
+      );      
+    }
   </script>
 
 </body>

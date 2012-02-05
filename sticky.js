@@ -140,14 +140,14 @@
     $('.sticky').ready(function () {
       // If 'autoclose' is enabled, set a timer to close the sticky
       if (settings['autoclose'])
-        $('#' + uniqID).delay(settings['autoclose']).fadeOut(settings['speed'], function() {
+        $('#' + uniqID).delay(settings['autoclose']).slideUp(settings['speed'], function() {
 	        $(this).remove(); // remove the note from dom
 	      });
     });
 
     // Closing a sticky
     $('.sticky-close').click(function () {
-      $('#' + $(this).attr('rel')).dequeue().fadeOut(settings['speed'], function() {
+      $('#' + $(this).attr('rel')).dequeue().slideUp(settings['speed'], function() {
         $(this).remove();	// remove the note from dom
       });
     });

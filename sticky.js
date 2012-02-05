@@ -27,7 +27,8 @@
 	  	speed : "fast", // or any other jquery speed definition
 	  	duplicates : true, // boolean
 	  	autoclose : 5000, // milisec after the sticky autocloses, or false
-	  	position : "top-right" // top-left, top-right, bottom-left or bottom-right
+	  	position : "top-right", // top-left, top-right, bottom-left or bottom-right
+      social : true // or false. Will always be false if noteData.link is not available
 	  }
 	  callback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 
   */
@@ -54,8 +55,23 @@
 	        <div class="sticky2-message-title">__TITLE__</div>\
 	        <div class="sticky2-message-text">__TEXT__</div>\
 	      </div>\
+        <div style="clear:both;"></div>\
+        <div class="sticky2-message-social">\
+          <div class="sticky2-message-social-facebook"><div>__FACEBOOK__</div></div>\
+          <div class="sticky2-message-social-google"><div>__GOOGLE__</div></div>\
+          <div class="sticky2-message-social-twitter"><div>__TWITTER__</div></div>\
+        </div>\
 	    </div>\
     ';
+
+    // identifies if we need to load JS for social plugins
+    var socialJsLoaded = false;
+
+    var socialTemplates = {
+      facebook : '<iframe src="//www.facebook.com/plugins/like.php?href=__LINK__&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=300106583504" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>',
+      google : '<div class="g-plusone" data-size="medium" data-href="__LINK__"></div>',
+      twitter : '<a href="https://twitter.com/share" class="twitter-share-button" data-url="__LINK__" data-count="none" data-via="FireFollow" data-hashtags="FireFollow">Tweet</a>'
+    };
 
 
     // if noteData is an object, we need to construct the note from noteTemplate
@@ -69,6 +85,22 @@
 	    	.replace("__IMAGE__", noteData.image)
 	    	.replace("__TITLE__", noteData.title)
 	    	.replace("__TEXT__", noteData.text);
+
+      // Prepare social plugins
+      var socialPluginsHtml = {
+        facebook : socialTemplates.facebook.replace("__LINK__", noteData.link),
+        google : socialTemplates.google.replace("__LINK__", noteData.link),
+        twitter : socialTemplates.twitter.replace("__LINK__", noteData.link)
+      };
+
+      // Inject social plugins
+      note = note
+        .replace("__FACEBOOK__", socialPluginsHtml.facebook)
+        .replace("__GOOGLE__", socialPluginsHtml.google)
+        .replace("__TWITTER__", socialPluginsHtml.twitter);
+
+      // Load required social scripts
+      loadSocialJs();
     }
 
 
@@ -166,6 +198,22 @@
       callback(response);
     else
       return (response);
+
+
+    function loadSocialJs() {
+      if(socialJsLoaded == true)
+        return;
+
+      socialJsLoaded = true;
+
+      // Google
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+
+      // Twitter
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");      
+    }
     
   } // $.fn.sticky
 

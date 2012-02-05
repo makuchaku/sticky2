@@ -103,4 +103,30 @@ img.sticky-close {
 	font-size : 12px;
 	padding-top : 3px;
 }
+
+.sticky2-message-social {
+	margin-top : 5px;
+}
+
+.sticky2-message-social > div {
+	float : right;
+	overflow-x : hidden;
+	padding : 0px 14px;
+}
+
+.sticky2-message-social-facebook > div {
+	overflow-x : hidden;
+	width : 48px;
+}
+
+.sticky2-message-social-google > div {
+	width : 33px;
+	overflow-x : hidden;
+}
+
+.sticky2-message-social-twitter > div {
+	width : 60px;
+	overflow-x : hidden;
+}
+
 /*Message*/

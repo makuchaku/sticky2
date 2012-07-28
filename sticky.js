@@ -10,8 +10,8 @@
 (function ($) {
 
   // Using it without an object
-  $.sticky = function (note, options, callback) {
-    return $.fn.sticky(note, options, callback);
+  $.sticky = function (note, options, openCallback, closeCallback) {
+    return $.fn.sticky(note, options, openCallback, closeCallback);
   };
 
 
@@ -29,9 +29,9 @@
 	  	autoclose : 5000, // milisec after the sticky autocloses, or false
 	  	position : "top-right" // top-left, top-right, bottom-left or bottom-right
 	  }
-	  callback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 
+	  openCallback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 
   */
-  $.fn.sticky = function (noteData, options, callback) {
+  $.fn.sticky = function (noteData, options, openCallback, closeCallback) {
     // Default settings
     var settings = {
       'speed': 'fast', 			// animations: fast, slow, or integer
@@ -145,14 +145,6 @@
 	      });
     });
 
-    // Closing a sticky
-    $('.sticky-close').click(function () {
-      $('#' + $(this).attr('rel')).dequeue().slideUp(settings['speed'], function() {
-        $(this).remove();	// remove the note from dom
-      });
-    });
-
-
     // Callback data
     var response = {
       'id': uniqID,
@@ -161,9 +153,20 @@
       'position': position
     }
 
+    // Closing a sticky
+    $('.sticky-close').click(function () {
+      $('#' + $(this).attr('rel')).dequeue().slideUp(settings['speed'], function() {
+        $(this).remove();	// remove the note from dom
+
+        if(closeCallback)
+          closeCallback(response);
+      });
+    });
+
+
     // Callback function?
-    if (callback)
-      callback(response);
+    if (openCallback)
+      openCallback(response);
     else
       return (response);
     

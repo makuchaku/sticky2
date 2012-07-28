@@ -12,7 +12,7 @@
   <script type="text/javascript">
     $(function() {
       window.showSticky();
-      $.sticky("This is just a textual notification which would not be clickable.", {autoclose : false});
+      //$.sticky("This is just a textual notification which would not be clickable.", {autoclose : false});
     });
 
     function showSticky() {
@@ -24,9 +24,10 @@
           text : "This is a demo notification which was requested in a more structured manner. This notification should have an image, title, text & would be clickable."
         },
         {
-          position : "top-right",
+          position : "bottom-right",
           autoclose : false
         },
+        function(args){console.log(args);},
         function(args){console.log(args);}
       );      
     }

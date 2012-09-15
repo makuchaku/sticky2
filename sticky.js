@@ -29,7 +29,8 @@
 	  	autoclose : 5000, // milisec after the sticky autocloses, or false
 	  	position : "top-right" // top-left, top-right, bottom-left or bottom-right
 	  }
-	  openCallback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position} 
+	  openCallback => function, called when sticky is shown. Args =>  {'id': uniqID, 'duplicate': duplicate, 'displayed': display, 'position': position}, 
+	  closeCallback => function, called when sticky has been closed (same args as openCallback)	  
   */
   $.fn.sticky = function (noteData, options, openCallback, closeCallback) {
     // Default settings
